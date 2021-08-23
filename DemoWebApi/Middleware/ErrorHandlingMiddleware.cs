@@ -1,7 +1,6 @@
 ﻿using Demo.WebAPI.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Serilog;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -36,13 +35,11 @@ namespace Demo.WebAPI.Middleware
 
             if (exception is PresentationException)
             {
-                Log.Error(exception, "PresentationException");
                 code = HttpStatusCode.BadRequest;
                 result = JsonConvert.SerializeObject(new { error = exception.Message });
             }
             else
             {
-                Log.Error(exception, "GeneralException");
                 code = HttpStatusCode.BadRequest;
                 result = JsonConvert.SerializeObject(new { error = exception.Message });
             }
