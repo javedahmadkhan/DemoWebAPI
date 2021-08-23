@@ -2,6 +2,7 @@
 using Demo.BusinessLogic.Service;
 using Demo.Repository.UnitOfWork.Contract;
 using Demo.Repository.UnitOfWork.Service;
+using Demo.WebAPI.Helper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -51,6 +52,8 @@ namespace Demo.WebAPI.Extensions
                         name: "demo-storage-check",
                         tags: new string[] { "demostorage" });
             }
+
+            hcBuilder.AddCheck<MemoryHealthCheck>("Memory");
         }
 
         public static void ConfigureHealthChecksUI(this IServiceCollection services)
