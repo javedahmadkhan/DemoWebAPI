@@ -12,8 +12,4 @@
     <PackageReference Include="Realm" Version="10.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exceptions\Extensions\" />
-  </ItemGroup>
-
 </Project>
