@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/1d51acb7-055a-4d49-8d11-9912507bd1ec/resourceGroups/DemoWebAPIResourceGroup/providers/microsoft.insights/components/DemoWebAPI</ApplicationInsightsResourceId>
+    <UserSecretsId>5f1fc30f-8611-4e93-b210-9cd07b20cde7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
