@@ -1,10 +1,11 @@
 ﻿namespace Demo.Common.Exceptions.Middleware
 {
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
     using System;
     using System.Net;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Logging;
 
     public class ExceptionMiddleware
     {
@@ -37,15 +38,13 @@
 
         private static Task HandleExceptionAsync(HttpContext context, Exception e)
         {
-            var statusCode = (int) HttpStatusCode.InternalServerError;
-            context.Response.StatusCode = statusCode;
+            var statusCode = HttpStatusCode.InternalServerError; // 500 if unexpected
+            var result = JsonConvert.SerializeObject(new { error = e.Message });
+            
+            context.Response.StatusCode = (int)statusCode;
             context.Response.ContentType = "application/json";
 
-            return context.Response.WriteAsync(new
-            {
-                ErrorCode = statusCode,
-                ErrorMessage = e.Message
-            }.ToString());
+            return context.Response.WriteAsync(result);
         }
     }
 }

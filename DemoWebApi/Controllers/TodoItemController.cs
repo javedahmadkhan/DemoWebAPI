@@ -1,13 +1,10 @@
 ﻿using Demo.BusinessLogic.Contract;
 using Demo.Models;
 using Demo.WebAPI.Attributes;
-using Demo.WebAPI.Exceptions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Polly.CircuitBreaker;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace DemoWebApi.Controllers
@@ -45,7 +42,7 @@ namespace DemoWebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message + "Exception occured in Get to do items method");
-                throw new PresentationException(ex.Message, ex.InnerException);
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -68,7 +65,7 @@ namespace DemoWebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message + "Exception occured in Get to do item based on id method");
-                throw new PresentationException(ex.Message, ex.InnerException);
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -104,7 +101,7 @@ namespace DemoWebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message + "Exception occured in create / update to do items method");
-                throw new PresentationException(ex.Message, ex.InnerException);
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -135,7 +132,7 @@ namespace DemoWebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message + "Exception occured in delete to do items method");
-                throw new PresentationException(ex.Message, ex.InnerException);
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
     }

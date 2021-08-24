@@ -5,10 +5,14 @@
 
     public static class MiddlewareExtensions
     {
-        public static IApplicationBuilder UseNumberChecker(this IApplicationBuilder app) =>
-            app.UseMiddleware<NumberCheckerMiddleware>();
+        public static IApplicationBuilder UseNumberChecker(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<NumberCheckerMiddleware>();
+        }
 
-        public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder app) =>
-            app.UseMiddleware<ExceptionMiddleware>();
+        public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<ExceptionMiddleware>();
+        }
     }
 }

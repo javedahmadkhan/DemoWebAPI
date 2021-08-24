@@ -1,4 +1,4 @@
-﻿namespace Demo.Common.Exceptions.Middleware
+﻿namespace Demo.Common
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;

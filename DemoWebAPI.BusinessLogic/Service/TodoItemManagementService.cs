@@ -2,7 +2,6 @@
 using Demo.BusinessLogic.Contract;
 using Demo.Entities;
 using Demo.Models;
-using Demo.Repository.Exception;
 using Demo.Repository.UnitOfWork.Contract;
 using System;
 using System.Collections.Generic;
@@ -44,7 +43,7 @@ namespace Demo.BusinessLogic.Service
             }
             catch (Exception ex)
             {
-                throw new BusinessException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -60,7 +59,7 @@ namespace Demo.BusinessLogic.Service
             }
             catch (Exception ex)
             {
-                throw new BusinessException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -80,7 +79,7 @@ namespace Demo.BusinessLogic.Service
             }
             catch (Exception ex)
             {
-                throw new BusinessException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -102,7 +101,7 @@ namespace Demo.BusinessLogic.Service
             }
             catch (Exception ex)
             {
-                throw new BusinessException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
     }
