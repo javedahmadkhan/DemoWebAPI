@@ -104,7 +104,7 @@ namespace DemoWebApi
             services.ConfigureCors();
             services.ConfigureUnitOfWork();
             services.ConfigureBusinessService();
-            // services.ConfigureHTTPClientFactory();
+            services.ConfigureHTTPClientFactory();
             services.ConfigureHealthChecks(Configuration);
             services.ConfigureHealthChecksUI();
 
@@ -134,23 +134,24 @@ namespace DemoWebApi
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-            app.UseExceptionHandler(options => options.Run(async context =>
-            {
-                var statusCode = (int)HttpStatusCode.InternalServerError;
-                context.Response.StatusCode = statusCode;
-                context.Response.ContentType = "application/json";
+            //app.UseExceptionHandler(options => options.Run(async context =>
+            //{
+            //    var statusCode = (int)HttpStatusCode.InternalServerError;
+            //    context.Response.StatusCode = statusCode;
+            //    context.Response.ContentType = "application/json";
 
-                var exception = context.Features.Get<IExceptionHandlerFeature>();
-                if (exception != null)
-                    await context.Response.WriteAsync(new
-                    {
-                        ErrorCode = statusCode,
-                        ErrorMessage = exception.Error.Message,
-                        ErrorDescription = "Global exception handling using app.UseExceptionHandler"
+            //    var exception = context.Features.Get<IExceptionHandlerFeature>();
+            //    if (exception != null)
+            //        await context.Response.WriteAsync(new
+            //        {
+            //            ErrorCode = statusCode,
+            //            ErrorMessage = exception.Error.Message,
+            //            ErrorDescription = "Global exception handling using app.UseExceptionHandler"
 
-                    }.ToString());
+            //        }.ToString());
 
-            }));
+            //}));
+
             app.UseHttpsRedirection();
             
 

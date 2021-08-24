@@ -1,5 +1,7 @@
 ﻿using Demo.BusinessLogic.Contract;
 using Demo.BusinessLogic.Service;
+using Demo.Common.HTTPClientFactory.Contract;
+using Demo.Common.HTTPClientFactory.Service;
 using Demo.Repository.UnitOfWork.Contract;
 using Demo.Repository.UnitOfWork.Service;
 using Demo.WebAPI.Helper;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Polly.Extensions.Http;
+using Serilog;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -80,12 +83,11 @@ namespace Demo.WebAPI.Extensions
 
         public static void ConfigureHTTPClientFactory(this IServiceCollection services)
         {
-            services.AddHttpClient<ITodoItemManagementService, TodoItemManagementService>(client =>
-            {
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-            })
+            var noOpPolicy = Policy.NoOpAsync().AsAsyncPolicy<HttpResponseMessage>();
+
+            services.AddHttpClient<IHttpClientService, HttpClientFactoryService>()
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(request => request.Method == HttpMethod.Get ? GetRetryPolicy() : noOpPolicy)
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
         }
 
@@ -104,19 +106,41 @@ namespace Demo.WebAPI.Extensions
         {
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
-                .AdvancedCircuitBreakerAsync(0.25, TimeSpan.FromSeconds(60), 7, TimeSpan.FromSeconds(30), OnBreak, OnReset, OnHalfOpen);
+                .CircuitBreakerAsync(
+                    handledEventsAllowedBeforeBreaking: 2,
+                    durationOfBreak: TimeSpan.FromSeconds(5),
+                    onBreak: OnBreak,
+                    onReset: OnReset,
+                    onHalfOpen: OnHalfOpen);
         }
 
+        private static IAsyncPolicy<HttpResponseMessage> GetAdvancedCircuitBreakerPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .AdvancedCircuitBreakerAsync(
+                failureThreshold: 0.25,
+                samplingDuration: TimeSpan.FromSeconds(60),
+                minimumThroughput: 7,
+                durationOfBreak: TimeSpan.FromSeconds(30),
+                onBreak: OnBreak,
+                onReset: OnReset,
+                onHalfOpen: OnHalfOpen);
+        }
+
+        //The action to call when the circuit transitions to state, ready to try action executions again
         private static void OnHalfOpen()
         {
-            Console.WriteLine("Circuit in test mode, one request will be allowed.");
+            Log.Information("Circuit in test mode, one request will be allowed.");
         }
 
+        //The action to call when the circuit resets to a state.
         private static void OnReset()
         {
             Console.WriteLine("Circuit closed, requests flow normally.");
         }
 
+        //The action to call when the circuit transitions to an state.
         private static void OnBreak(DelegateResult<HttpResponseMessage> result, TimeSpan span)
         {
             Console.WriteLine("Circuit cut, requests will not flow.");

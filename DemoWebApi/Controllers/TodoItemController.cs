@@ -1,4 +1,5 @@
 ﻿using Demo.BusinessLogic.Contract;
+using Demo.Common.HTTPClientFactory.Contract;
 using Demo.Models;
 using Demo.WebAPI.Attributes;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,14 @@ namespace DemoWebApi.Controllers
     public class TodoItemController : ControllerBase
     {
         private readonly ITodoItemManagementService service;
-        private readonly ILogger _logger;
+        private readonly ILogger<TodoItemController> _logger;
+        private readonly IHttpClientService _httpClientService;
 
-        public TodoItemController(ITodoItemManagementService service, ILogger<TodoItemController> logger)
+        public TodoItemController(ITodoItemManagementService service, ILogger<TodoItemController> logger, IHttpClientService httpClientService)
         {
             this.service = service;
             _logger = logger;
+            _httpClientService = httpClientService;
         }
 
         [Route("TodoItems")]
@@ -132,6 +135,28 @@ namespace DemoWebApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message + "Exception occured in delete to do items method");
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+        }
+
+        [Route("Sample")]
+        [HttpGet]
+        public async Task<IActionResult> GetSample()
+        {
+            try
+            {
+                _logger.LogInformation("Log message in sample method");
+                var response = await _httpClientService.GetListWithHttpRequestMessageAsync("https://api.twilio.com/2010-04-01/");
+                return Ok(response);
+            }
+            catch (BrokenCircuitException ex)
+            {
+                _logger.LogError($"Broken Circuit Exception {ex.Message} Exception occured in Get to do items method");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message + "Exception occured");
                 throw new Exception(ex.Message, ex.InnerException);
             }
         }
