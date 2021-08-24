@@ -85,6 +85,8 @@ namespace DemoWebApi
 
             services.AddControllers();
 
+            services.AddApplicationInsightsTelemetry();
+
             services.AddDbContext<DemoDBContext>(options =>
             {
                 options.UseSqlServer(con.GetConnectionString(),
