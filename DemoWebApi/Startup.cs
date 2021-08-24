@@ -1,6 +1,7 @@
 using AutoMapper;
 using Demo.BusinessLogic.AutoMapperProfile;
 using Demo.Common;
+using Demo.Common.Exceptions.Middleware;
 using Demo.Entities.DataContext;
 using Demo.WebAPI.Extensions;
 using HealthChecks.UI.Client;
@@ -130,6 +131,9 @@ namespace DemoWebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DemoWebApi v1"));
             }
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+
             app.UseExceptionHandler(options => options.Run(async context =>
             {
                 var statusCode = (int)HttpStatusCode.InternalServerError;

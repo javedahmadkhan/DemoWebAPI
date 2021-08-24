@@ -1,37 +1,28 @@
 ﻿namespace Demo.Common.Exceptions.Middleware
 {
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
     using System;
     using System.Net;
     using System.Threading.Tasks;
 
-    public class ExceptionMiddleware
+    public class ExceptionHandlingMiddleware
     {
-        private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
+        private RequestDelegate requestDelegate;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        public ExceptionHandlingMiddleware(RequestDelegate requestDelegate)
         {
-            _next = next ?? throw new ArgumentNullException(nameof(next));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.requestDelegate = requestDelegate;
         }
 
         public async Task Invoke(HttpContext context)
         {
             try
             {
-                await _next(context);
+                await requestDelegate(context);
             }
             catch (Exception e)
             {
-                _logger.LogError($"Something went wrong: {e}");
-                if (context.Response.HasStarted)
-                {
-                    _logger.LogWarning("The response has already started, the Exception Middleware will not be executed");
-                    throw;
-                }
                 await HandleExceptionAsync(context, e);
             }
         }
