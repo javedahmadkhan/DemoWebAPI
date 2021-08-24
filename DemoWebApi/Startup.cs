@@ -17,6 +17,7 @@ using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using Demo.Common.Contstants;
 
 namespace DemoWebApi
 {
@@ -48,15 +49,15 @@ namespace DemoWebApi
             {
                 policies.AddPolicy("p-web-api-with-roles-user", p =>
                 {
-                    p.RequireClaim("roles", "web-api-with-roles-user");
+                    p.RequireClaim("roles", Demo.Common.Contstants.Constants.approle1);
                 });
                 policies.AddPolicy("p-web-api-with-roles-user2", p =>
                 {
-                    p.RequireClaim("roles", "web-api-with-roles-user2");
+                    p.RequireClaim("roles", Demo.Common.Contstants.Constants.approle2);
                 });
                 policies.AddPolicy("p-web-api-with-roles-admin", p =>
                 {
-                    p.RequireClaim("roles", "web-api-with-roles-admin");
+                    p.RequireClaim("roles", Demo.Common.Contstants.Constants.approleAdmin);
                 });
 
                 policies.AddPolicy("ValidateAccessTokenPolicy", validateAccessTokenPolicy =>
@@ -115,7 +116,7 @@ namespace DemoWebApi
                 });
             services.AddSingleton(mapperConfig.CreateMapper());
             
-            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
+            services.AddApplicationInsightsTelemetry(con.GetAppInsightsConnectionString());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -135,7 +136,7 @@ namespace DemoWebApi
             app.UseAuthorization();
 
             DBInitializer.Initialize(context);
-            loggerFactory.AddFile("Logs/mylog-{Date}.txt");
+            loggerFactory.AddFile(Demo.Common.Contstants.Constants.logPath);
 
             app.UseEndpoints(endpoints =>
             {
@@ -148,8 +149,8 @@ namespace DemoWebApi
 
                 endpoints.MapHealthChecksUI(setup =>
                 {
-                    setup.UIPath = "/health-ui";
-                    setup.ApiPath = "/health-api";
+                    setup.UIPath = Demo.Common.Contstants.Constants.healthCheckUIpath;
+                    setup.ApiPath = Demo.Common.Contstants.Constants.healthCheckAPIpath;
                 });
 
                 endpoints.MapDefaultControllerRoute();

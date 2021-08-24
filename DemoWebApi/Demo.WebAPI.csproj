@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DemoWebAPI.BusinessLogic\Demo.BusinessLogic.csproj" />
+    <ProjectReference Include="..\DemoWebAPI.Common\Demo.Common.csproj" />
     <ProjectReference Include="..\DemoWebAPIEntities\Demo.Entities.csproj" />
     <ProjectReference Include="..\DemoWebAPIModels\Demo.Models.csproj" />
     <ProjectReference Include="..\DemoWebAPIRepository\Demo.Repository.csproj" />

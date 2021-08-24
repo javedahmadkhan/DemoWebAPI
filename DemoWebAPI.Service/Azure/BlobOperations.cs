@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Demo.Common.Contstants;
 
 namespace Demo.Services.Azure
 {
@@ -44,8 +45,8 @@ namespace Demo.Services.Azure
         }
         static string GetUserOAuthToken(string tenantId, string applicationId, string clientSecret)
         {
-            const string ResourceId = "https://storage.azure.com/";
-            const string AuthInstance = "https://login.microsoftonline.com/{0}/";
+            string ResourceId = Constants.ResourceId;
+            string AuthInstance = Constants.AuthInstance;
             string authority = string.Format(CultureInfo.InvariantCulture, AuthInstance, tenantId);
             AuthenticationContext authContext = new AuthenticationContext(authority);
             var clientCred = new ClientCredential(applicationId, clientSecret);

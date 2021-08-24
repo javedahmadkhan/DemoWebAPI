@@ -22,4 +22,8 @@
     <Folder Include="External\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DemoWebAPI.Common\Demo.Common.csproj" />
+  </ItemGroup>
+
 </Project>

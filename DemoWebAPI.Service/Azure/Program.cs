@@ -1,5 +1,6 @@
 ﻿using Demo.Services.Azure;
 using System.IO;
+using Demo.Common.Contstants;
 
 
 namespace AzureFileUpload
@@ -19,7 +20,7 @@ namespace AzureFileUpload
 
 
             //Demo Download File
-            string azurePathInBlob = "dev/files/myfile.txt";
+            string azurePathInBlob = Constants.azurePathInBlob;
             string destinationPath= string.Format(@"File path");
             DownloadFile(destinationPath, azurePathInBlob);
 
