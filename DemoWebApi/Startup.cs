@@ -1,6 +1,7 @@
 using AutoMapper;
 using Demo.BusinessLogic.AutoMapperProfile;
 using Demo.Common;
+using Demo.WebAPI.Controllers;
 using Demo.Entities.DataContext;
 using Demo.WebAPI.Extensions;
 using HealthChecks.UI.Client;
@@ -17,6 +18,9 @@ using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Demo.Common.Contstants;
 
 namespace DemoWebApi
@@ -128,8 +132,25 @@ namespace DemoWebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DemoWebApi v1"));
             }
+            app.UseExceptionHandler(options => options.Run(async context =>
+            {
+                var statusCode = (int)HttpStatusCode.InternalServerError;
+                context.Response.StatusCode = statusCode;
+                context.Response.ContentType = "application/json";
 
+                var exception = context.Features.Get<IExceptionHandlerFeature>();
+                if (exception != null)
+                    await context.Response.WriteAsync(new
+                    {
+                        ErrorCode = statusCode,
+                        ErrorMessage = exception.Error.Message,
+                        ErrorDescription = "Global exception handling using app.UseExceptionHandler"
+
+                    }.ToString());
+
+            }));
             app.UseHttpsRedirection();
+            
 
             app.UseRouting();
             app.UseAuthentication();
