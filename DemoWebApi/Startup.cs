@@ -83,9 +83,7 @@ namespace DemoWebApi
             //    options.Filters.Add(new AuthorizeFilter(policy));
             //});
 
-            services.AddControllers();
-
-            services.AddApplicationInsightsTelemetry();
+            services.AddControllers();                 
 
             services.AddDbContext<DemoDBContext>(options =>
             {
@@ -116,6 +114,7 @@ namespace DemoWebApi
                     mc.AddProfile(new AutoMapperProfile());
                 });
             services.AddSingleton(mapperConfig.CreateMapper());
+            
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
         }
 

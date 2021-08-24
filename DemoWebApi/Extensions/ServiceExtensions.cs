@@ -30,7 +30,6 @@ namespace Demo.WebAPI.Extensions
 
         public static void ConfigureHealthChecks(this IServiceCollection services, IConfiguration config)
         {
-            var sqlConnectionString = config["ConnectionString:DemoWebAPI"];
             var accountName = config.GetValue<string>("AzureStorageAccountName");
             var accountKey = config.GetValue<string>("AzureStorageAccountKey");
 
@@ -39,18 +38,19 @@ namespace Demo.WebAPI.Extensions
 
             // Add a health check
             hcBuilder
+                .AddCheck("self", () => HealthCheckResult.Healthy())
                 .AddSqlServer(
-                    sqlConnectionString,
-                    name: "DB health check",
-                    tags: new string[] { "demodb" });
+                    config["ConnectionString:DemoWebAPI"],
+                    name: "Database health check",
+                    tags: new string[] { "SQLDatabase" });
 
             if (!string.IsNullOrEmpty(accountName) && !string.IsNullOrEmpty(accountKey))
             {
                 hcBuilder
                     .AddAzureBlobStorage(
                         $"DefaultEndpointsProtocol=https;AccountName={accountName};AccountKey={accountKey};EndpointSuffix=core.windows.net",
-                        name: "demo-storage-check",
-                        tags: new string[] { "demostorage" });
+                        name: "Azure Blob Storage health check",
+                        tags: new string[] { "AzureBlobStorage" });
             }
 
             hcBuilder.AddCheck<MemoryHealthCheck>("Memory");
@@ -121,10 +121,6 @@ namespace Demo.WebAPI.Extensions
         {
             Console.WriteLine("Circuit cut, requests will not flow.");
         }
-        #endregion
-
-        #region
-
         #endregion
     }
 }
