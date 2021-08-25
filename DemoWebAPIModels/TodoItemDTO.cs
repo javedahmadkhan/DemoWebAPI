@@ -1,5 +1,8 @@
 ﻿namespace Demo.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TodoItemDTO
     {
         public int Id { get; set; }

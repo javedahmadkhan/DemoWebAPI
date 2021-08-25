@@ -11,17 +11,30 @@ using System.Xml.Linq;
 
 namespace Demo.Services.HTTPClientFactory.Service
 {
+	/// <summary>
+	/// 
+	/// </summary>
     public class HttpClientFactoryService : IHttpClientService
 	{
 		private readonly IHttpClientFactory httpClientFactory;
 		private readonly HttpClient httpClient;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="httpClientFactory"></param>
+		/// <param name="httpClient"></param>
 		public HttpClientFactoryService(IHttpClientFactory httpClientFactory, HttpClient httpClient)
 		{
 			this.httpClientFactory = httpClientFactory;
 			this.httpClient = httpClientFactory.CreateClient();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public async Task<string> GetListAsync(string path)
 		{
 			using (var response = await httpClient.GetAsync(path, HttpCompletionOption.ResponseHeadersRead))
@@ -32,6 +45,11 @@ namespace Demo.Services.HTTPClientFactory.Service
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public async Task<string> GetListWithHttpRequestMessageAsync(string path)
 		{
 			var request = new HttpRequestMessage(HttpMethod.Get, path);
@@ -45,6 +63,12 @@ namespace Demo.Services.HTTPClientFactory.Service
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public async Task<string> GetAsync(string path, string id)
 		{
 			var uri = Path.Combine(path, id);
@@ -57,6 +81,11 @@ namespace Demo.Services.HTTPClientFactory.Service
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public async Task<string> GetListwithXMLHeaderAsync(string path)
 		{
 			var request = new HttpRequestMessage(HttpMethod.Get, path);
@@ -79,6 +108,12 @@ namespace Demo.Services.HTTPClientFactory.Service
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="body"></param>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public async Task<string> CreateAsync(object body, string path)
 		{
 			var requestBody = JsonSerializer.Serialize(body);
@@ -93,6 +128,12 @@ namespace Demo.Services.HTTPClientFactory.Service
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="body"></param>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public async Task<string> CreateWithHttpRequestMessageAsync(object body, string path)
 		{
 			var requestBody = JsonSerializer.Serialize(body);
@@ -110,6 +151,13 @@ namespace Demo.Services.HTTPClientFactory.Service
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="body"></param>
+		/// <param name="path"></param>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public async Task<string> UpdateAsync(object body, string path, string id)
 		{
 			var requestBody = JsonSerializer.Serialize(body);
@@ -126,6 +174,13 @@ namespace Demo.Services.HTTPClientFactory.Service
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="body"></param>
+		/// <param name="path"></param>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public async Task<string> UpdateWithHttpRequestMessageAsync(object body, string path, string id)
 		{
 			var requestBody = JsonSerializer.Serialize(body);
@@ -145,6 +200,12 @@ namespace Demo.Services.HTTPClientFactory.Service
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public async Task DeleteAsync(string path, string id)
 		{
 			var uri = Path.Combine(path, id);
@@ -155,6 +216,12 @@ namespace Demo.Services.HTTPClientFactory.Service
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public async Task DeleteWithHttpRequestMessageAsync(string path, string id)
 		{
 			var uri = Path.Combine(path, id);

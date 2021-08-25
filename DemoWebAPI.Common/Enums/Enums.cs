@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Demo.Common.Enums
+﻿namespace Demo.Common.Enums
 {
-   public class Enums
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Enums
     {
     }
 }

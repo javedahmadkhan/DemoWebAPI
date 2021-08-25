@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Demo.Common.Contstants
+﻿namespace Demo.Common.Contstants
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Constants
     {
         public const string conStr = "DemoWebAPI";

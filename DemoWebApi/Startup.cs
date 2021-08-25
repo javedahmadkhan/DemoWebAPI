@@ -7,10 +7,8 @@ using Demo.WebAPI.Extensions;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,12 +18,18 @@ using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 
 namespace DemoWebApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,6 +37,10 @@ namespace DemoWebApi
 
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -87,7 +95,7 @@ namespace DemoWebApi
             //    options.Filters.Add(new AuthorizeFilter(policy));
             //});
 
-            services.AddControllers();                 
+            services.AddControllers();
 
             services.AddDbContext<DemoDBContext>(options =>
             {
@@ -118,10 +126,17 @@ namespace DemoWebApi
                     mc.AddProfile(new AutoMapperProfile());
                 });
             services.AddSingleton(mapperConfig.CreateMapper());
-            
+
             services.AddApplicationInsightsTelemetry(con.GetAppInsightsConnectionString());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="context"></param>
+        /// <param name="loggerFactory"></param>
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DemoDBContext context, ILoggerFactory loggerFactory)
         {
@@ -153,7 +168,7 @@ namespace DemoWebApi
             //}));
 
             app.UseHttpsRedirection();
-            
+
 
             app.UseRouting();
             app.UseAuthentication();

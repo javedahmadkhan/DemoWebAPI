@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace Demo.Repository.Contract.DB
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public interface IDBRepository<TEntity>
          where TEntity : IEntity
     {
@@ -35,6 +39,10 @@ namespace Demo.Repository.Contract.DB
         /// <param name="entity">Entity object to be added or updated</param>
         void AddOrUpdate(TEntity entity);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
         void AttachEntity(TEntity entity);
 
         /// <summary>

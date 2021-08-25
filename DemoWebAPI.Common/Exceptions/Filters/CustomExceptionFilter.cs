@@ -4,8 +4,15 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Filters;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class CustomExceptionFilter: IExceptionFilter
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public void OnException(ExceptionContext context)
         {
             var status = HttpStatusCode.InternalServerError;

@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace Demo.Repository.UnitOfWork.Service
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class UnitOfWork : IUnitOfWork
     {
         private readonly DemoDBContext context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public UnitOfWork(DemoDBContext context)
         {
             this.context = context;
@@ -17,16 +24,26 @@ namespace Demo.Repository.UnitOfWork.Service
             this.TodoItemRepository = new TodoItemRepository(context);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public UnitOfWork()
         {
         }
 
         public ITodoItemRepository TodoItemRepository { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task SaveChangesAsync()
         {
             // Use of an EF Core resiliency strategy when using multiple DbContexts

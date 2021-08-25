@@ -3,15 +3,27 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class NumberCheckerMiddleware
     {
         private readonly RequestDelegate _next;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="next"></param>
         public NumberCheckerMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             var value = context.Request.Query["value"].ToString();

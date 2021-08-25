@@ -2,6 +2,9 @@
 
 namespace Demo.Entities.DomainEntity.Contract
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IAudit
     {
         string CreatedBy { get; set; }

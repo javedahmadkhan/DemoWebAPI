@@ -2,6 +2,9 @@
 
 namespace Demo.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TodoItemListDTO
     {
         public TodoItemListDTO()

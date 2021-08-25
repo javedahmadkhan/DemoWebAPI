@@ -10,17 +10,30 @@ using System.Threading.Tasks;
 
 namespace Demo.BusinessLogic.Service
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TodoItemManagementService : ITodoItemManagementService
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="mapper"></param>
         public TodoItemManagementService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="todoItemDTO"></param>
+        /// <returns></returns>
         public async Task<int> CreateOrUpdateTodoItem(TodoItemCreateOrUpdateDTO todoItemDTO)
         {
             try
@@ -47,6 +60,11 @@ namespace Demo.BusinessLogic.Service
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<int> DeleteTodoItem(int id)
         {
             try
@@ -63,6 +81,11 @@ namespace Demo.BusinessLogic.Service
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<TodoItemDTO> GetTodoItem(int id)
         {
             try
@@ -83,6 +106,10 @@ namespace Demo.BusinessLogic.Service
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<TodoItemListDTO> GetTodoItemList()
         {
             try

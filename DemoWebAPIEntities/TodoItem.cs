@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Demo.Entities
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Table("TodoItem", Schema = "dbo")]
     public class TodoItem : BaseEntity
     {

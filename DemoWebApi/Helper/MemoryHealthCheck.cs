@@ -7,21 +7,38 @@ using System.Threading.Tasks;
 
 namespace Demo.WebAPI.Helper
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class MemoryHealthCheck : IHealthCheck
     {
         private readonly IOptionsMonitor<MemoryCheckOptions> _options;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
         public MemoryHealthCheck(IOptionsMonitor<MemoryCheckOptions> options)
         {
             _options = options;
         }
 
-        public string Name => "memory_check";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetName()
+        {
+            return "memory_check";
+        }
 
-        public Task<HealthCheckResult> CheckHealthAsync(
-            HealthCheckContext context,
-            CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
             var options = _options.Get(context.Registration.Name);
 
@@ -47,6 +64,9 @@ namespace Demo.WebAPI.Helper
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class MemoryCheckOptions
     {
         // Failure threshold (in bytes)

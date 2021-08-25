@@ -3,6 +3,9 @@ using System;
 
 namespace Demo.Entities.DomainEntity.Base
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class BaseEntity : IEntity, IAudit
     {
         protected BaseEntity()

@@ -2,6 +2,9 @@
 
 namespace Demo.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TodoItemCreateOrUpdateDTO
     {
         public int Id { get; set; }

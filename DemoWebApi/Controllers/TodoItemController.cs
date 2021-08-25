@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace DemoWebApi.Controllers
 {
+
+    /// <summary>
+    /// 
+    /// </summary>
     //[Authorize(Policy = "p-web-api-with-roles-user")]
     // [Authorize(Policy = "ValidateAccessTokenPolicy")]
     [Produces("application/json")]
@@ -21,6 +25,12 @@ namespace DemoWebApi.Controllers
         private readonly ILogger<TodoItemController> _logger;
         private readonly IHttpClientService _httpClientService;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="logger"></param>
+        /// <param name="httpClientService"></param>
         public TodoItemController(ITodoItemManagementService service, ILogger<TodoItemController> logger, IHttpClientService httpClientService)
         {
             this.service = service;
@@ -28,6 +38,10 @@ namespace DemoWebApi.Controllers
             _httpClientService = httpClientService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("TodoItems")]
         [HttpGet]
         public async Task<IActionResult> GetTodoItems()
@@ -49,6 +63,11 @@ namespace DemoWebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("TodoItem/{id}")]
         [HttpGet]
         public async Task<IActionResult> GetTodoItem(int id)
@@ -72,6 +91,11 @@ namespace DemoWebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="todoItemDto"></param>
+        /// <returns></returns>
         [Route("TodoItem/CreateOrUpdate")]
         [ModelValidation]
         [HttpPost]
@@ -108,7 +132,11 @@ namespace DemoWebApi.Controllers
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("TodoItem/{id}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteTodoItem(int id)
@@ -139,6 +167,10 @@ namespace DemoWebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("Sample")]
         [HttpGet]
         public async Task<IActionResult> GetSample()
