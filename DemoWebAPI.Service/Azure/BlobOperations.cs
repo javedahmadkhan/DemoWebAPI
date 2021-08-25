@@ -1,44 +1,70 @@
-﻿using AzureFileUpload;
-using Demo.Common.Contstants;
+﻿using Demo.Common.Contstants;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.Services.Azure
 {
     /// <summary>
     /// 
     /// </summary>
-    public class BlobOperations
+    public static class BlobOperations
     {
-        public static string tenantId;
-        public static string applicationId;
-        public static string clientSecret;
+        private static readonly string tenantId = Environment.GetEnvironmentVariable("tenantId");
+        private static readonly string applicationId = Environment.GetEnvironmentVariable("applicationId");
+        private static readonly string clientSecret = Environment.GetEnvironmentVariable("clientSecret");
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="azureOperationHelper"></param>
-        public static void UploadFile(BlobOperationHelper azureOperationHelper)
+        public static async Task<bool> BlobUpload<T>(BlobOperationHelper azureOperationHelper, List<T> list)
         {
-            CloudBlobContainer blobContainer = CreateCloudBlobContainer(tenantId, applicationId, clientSecret, azureOperationHelper.storageAccountName, azureOperationHelper.containerName, azureOperationHelper.storageEndPoint);
-            blobContainer.CreateIfNotExistsAsync();
-            CloudBlockBlob blob = blobContainer.GetBlockBlobReference(azureOperationHelper.blobName);
-            blob.UploadFromFileAsync(azureOperationHelper.srcPath);
+            var blobContainer = await CreateCloudBlobContainer(azureOperationHelper.StorageAccountName, azureOperationHelper.ContainerName, azureOperationHelper.StorageEndPoint);
+
+            var ifNotExists = await blobContainer.CreateIfNotExistsAsync();
+            if (ifNotExists) return false;
+
+            var content = GetListIntoBytes(list);
+
+            var blob = blobContainer.GetBlockBlobReference(azureOperationHelper.BlobName);
+            blob.Properties.ContentType = azureOperationHelper.BlobContentType;
+
+            if (!(await blob.ExistsAsync()) && content != null)
+            {
+                await blob.UploadFromByteArrayAsync(content, 0, content.Length);
+            }
+
+            return true;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="azureOperationHelper"></param>
-        public static void DownloadFile(BlobOperationHelper azureOperationHelper)
+        public static async Task<bool> DownloadFile(BlobOperationHelper azureOperationHelper)
         {
-            CloudBlobContainer blobContainer = CreateCloudBlobContainer(tenantId, applicationId, clientSecret, azureOperationHelper.storageAccountName, azureOperationHelper.containerName, azureOperationHelper.storageEndPoint);
-            CloudBlockBlob blob = blobContainer.GetBlockBlobReference(azureOperationHelper.blobName);
-            blob.DownloadToFileAsync(azureOperationHelper.destinationPath, FileMode.OpenOrCreate);
+            var blobContainer = await CreateCloudBlobContainer(azureOperationHelper.StorageAccountName, azureOperationHelper.ContainerName, azureOperationHelper.StorageEndPoint);
+
+            var ifNotExists = await blobContainer.CreateIfNotExistsAsync();
+            if (ifNotExists) return false;
+
+            var blob = blobContainer.GetBlockBlobReference(azureOperationHelper.BlobName);
+
+            if (await blob.ExistsAsync())
+            {
+                await blob.DownloadToFileAsync(azureOperationHelper.DestinationPath, FileMode.OpenOrCreate);
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -51,14 +77,17 @@ namespace Demo.Services.Azure
         /// <param name="containerName"></param>
         /// <param name="storageEndPoint"></param>
         /// <returns></returns>
-        private static CloudBlobContainer CreateCloudBlobContainer(string tenantId, string applicationId, string clientSecret, string storageAccountName, string containerName, string storageEndPoint)
+        private static async Task<CloudBlobContainer> CreateCloudBlobContainer(string storageAccountName, string containerName, string storageEndPoint)
         {
-            string accessToken = GetUserOAuthToken(tenantId, applicationId, clientSecret);
-            TokenCredential tokenCredential = new TokenCredential(accessToken);
-            StorageCredentials storageCredentials = new StorageCredentials(tokenCredential);
-            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(storageCredentials, storageAccountName, storageEndPoint, useHttps: true);
-            CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
-            CloudBlobContainer blobContainer = blobClient.GetContainerReference(containerName);
+            var accessToken = await GetUserOAuthToken();
+
+            var tokenCredential = new TokenCredential(accessToken);
+            var storageCredentials = new StorageCredentials(tokenCredential);
+            var cloudStorageAccount = new CloudStorageAccount(storageCredentials, storageAccountName, storageEndPoint, useHttps: true);
+
+            var blobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+            var blobContainer = blobClient.GetContainerReference(containerName);
             return blobContainer;
         }
 
@@ -69,15 +98,53 @@ namespace Demo.Services.Azure
         /// <param name="applicationId"></param>
         /// <param name="clientSecret"></param>
         /// <returns></returns>
-        static string GetUserOAuthToken(string tenantId, string applicationId, string clientSecret)
+        private static async Task<string> GetUserOAuthToken()
         {
-            string ResourceId = Constants.ResourceId;
-            string AuthInstance = Constants.AuthInstance;
-            string authority = string.Format(CultureInfo.InvariantCulture, AuthInstance, tenantId);
-            AuthenticationContext authContext = new AuthenticationContext(authority);
+            var ResourceId = Constants.ResourceId;
+            var AuthInstance = Constants.AuthInstance;
+            var authority = string.Format(CultureInfo.InvariantCulture, AuthInstance, tenantId);
+
+            var authContext = new AuthenticationContext(authority);
             var clientCred = new ClientCredential(applicationId, clientSecret);
-            AuthenticationResult result = authContext.AcquireTokenAsync(ResourceId, clientCred).Result;
-            return result.AccessToken;
+
+            var authenticationResult = await authContext.AcquireTokenAsync(ResourceId, clientCred);
+            return authenticationResult.AccessToken;
+        }
+
+        /// <summary>
+        /// Generic Method to Convert List into Bytes
+        /// </summary>
+        /// <param name="list">List</param>
+        /// <returns>Bytes</returns>
+        private static byte[] GetListIntoBytes<T>(List<T> list)
+        {
+            var numProperties = list[0].GetType().GetProperties().Count();
+            var sb = new StringBuilder();
+
+            foreach (var line in list)
+            {
+                var typeProperties = line.GetType().GetProperties();
+
+                for (var i = 1; i <= numProperties; i++)
+                {
+                    var value = string.Empty;
+                    if (typeProperties[i - 1].GetValue(line) != null)
+                    {
+                        value = typeProperties[i - 1].GetValue(line).ToString();
+                    }
+
+                    if (i != numProperties)
+                    {
+                        sb.Append(value + " ");
+                    }
+                    else
+                    {
+                        sb.Append(value + Environment.NewLine);
+                    }
+                }
+            }
+
+            return Encoding.ASCII.GetBytes(sb.ToString());
         }
     }
 }

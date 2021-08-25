@@ -44,7 +44,6 @@ namespace DemoWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var con = new ConfigManager(Configuration);
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             // Adds Microsoft Identity platform (AAD v2.0) support to protect this Api
@@ -99,7 +98,7 @@ namespace DemoWebApi
 
             services.AddDbContext<DemoDBContext>(options =>
             {
-                options.UseSqlServer(con.GetConnectionString(),
+                options.UseSqlServer(ConfigManager.GetConnectionString(),
                     sqlServerOptionsAction: sqlOptions =>
                     {
                         sqlOptions.EnableRetryOnFailure(
@@ -127,7 +126,7 @@ namespace DemoWebApi
                 });
             services.AddSingleton(mapperConfig.CreateMapper());
 
-            services.AddApplicationInsightsTelemetry(con.GetAppInsightsConnectionString());
+            services.AddApplicationInsightsTelemetry(ConfigManager.GetAppInsightsConnectionString());
         }
 
         /// <summary>

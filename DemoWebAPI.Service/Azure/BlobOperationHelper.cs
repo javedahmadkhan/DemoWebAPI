@@ -1,20 +1,22 @@
-﻿namespace AzureFileUpload
+﻿namespace Demo.Services.Azure
 {
     /// <summary>
     /// 
     /// </summary>
     public class BlobOperationHelper
     {
-        public string srcPath { get; set; }
+        public string SourcePath { get; set; }
 
-        public string destinationPath { get; set; }
-        
-        public string storageAccountName { get; set; }
-        
-        public string containerName { get; set; }
-        
-        public string storageEndPoint { get; set; }
-        
-        public string blobName { get; set; }
+        public string DestinationPath { get; set; }
+
+        public string StorageAccountName { get; set; }
+
+        public string ContainerName { get; set; }
+
+        public string StorageEndPoint { get; set; }
+
+        public string BlobName { get; set; }
+
+        public string BlobContentType { get; set; }
     }
 }
