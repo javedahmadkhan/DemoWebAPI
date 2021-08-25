@@ -1,7 +1,7 @@
 ﻿using Demo.BusinessLogic.Contract;
 using Demo.BusinessLogic.Service;
-using Demo.Common.HTTPClientFactory.Contract;
-using Demo.Common.HTTPClientFactory.Service;
+using Demo.Services.HTTPClientFactory.Contract;
+using Demo.Services.HTTPClientFactory.Service;
 using Demo.Repository.UnitOfWork.Contract;
 using Demo.Repository.UnitOfWork.Service;
 using Demo.WebAPI.Helper;

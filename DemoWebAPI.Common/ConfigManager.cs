@@ -3,12 +3,12 @@ using Demo.Common.Contstants;
 
 namespace Demo.Common
 {
-    public class CommonConfig
+    public class ConfigManager
     {
         // requires using Microsoft.Extensions.Configuration;
         private readonly IConfiguration Configuration;
 
-        public CommonConfig(IConfiguration configuration)
+        public ConfigManager(IConfiguration configuration)
         {
             Configuration = configuration;
         }

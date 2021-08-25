@@ -43,6 +43,14 @@ namespace Demo.Services.Azure
             CloudBlobContainer blobContainer = blobClient.GetContainerReference(containerName);
             return blobContainer;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="applicationId"></param>
+        /// <param name="clientSecret"></param>
+        /// <returns></returns>
         static string GetUserOAuthToken(string tenantId, string applicationId, string clientSecret)
         {
             string ResourceId = Constants.ResourceId;

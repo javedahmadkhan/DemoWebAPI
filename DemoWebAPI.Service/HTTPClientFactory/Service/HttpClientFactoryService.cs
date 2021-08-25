@@ -1,4 +1,4 @@
-﻿using Demo.Common.HTTPClientFactory.Contract;
+﻿using Demo.Services.HTTPClientFactory.Contract;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,11 +8,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 
-namespace Demo.Common.HTTPClientFactory.Service
+namespace Demo.Services.HTTPClientFactory.Service
 {
-	public class HttpClientFactoryService : IHttpClientService
+    public class HttpClientFactoryService : IHttpClientService
 	{
 		private readonly IHttpClientFactory httpClientFactory;
 		private readonly HttpClient httpClient;

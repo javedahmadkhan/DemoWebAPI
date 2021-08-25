@@ -1,6 +1,6 @@
 ﻿using Demo.BusinessLogic.Contract;
-using Demo.Common.HTTPClientFactory.Contract;
 using Demo.Models;
+using Demo.Services.HTTPClientFactory.Contract;
 using Demo.WebAPI.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

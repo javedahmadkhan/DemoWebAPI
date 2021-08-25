@@ -9,4 +9,8 @@
     <PackageReference Include="MSTest.TestFramework" Version="2.2.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Demo.WebAPI.Integration.UnitTests\" />
+  </ItemGroup>
+
 </Project>
