@@ -37,7 +37,7 @@ namespace Demo.Common
         public string GetAppInsightsConnectionString()
         {
 
-            string conStr = Configuration[$"ConnectionString:{Constants.appInsightsKey}"];
+            string conStr = Configuration[$"ApplicationInsights:{Constants.appInsightsKey}"];
             return conStr;
         }
     }
