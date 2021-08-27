@@ -176,8 +176,7 @@ namespace DemoWebApi
             app.UseAuthorization();
 
             DBInitializer.Initialize(context);
-            loggerFactory.AddFile(Demo.Common.Contstants.Constants.logPath);
-
+            loggerFactory.AddLog4Net();
             app.UseEndpoints(endpoints =>
             {
                 // HealthCheck middleware

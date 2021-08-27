@@ -4,7 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
     <ApplicationInsightsResourceId>/subscriptions/1d51acb7-055a-4d49-8d11-9912507bd1ec/resourceGroups/DemoWebAPIResourceGroup/providers/microsoft.insights/components/DemoWebAPI</ApplicationInsightsResourceId>
     <UserSecretsId>5f1fc30f-8611-4e93-b210-9cd07b20cde7</UserSecretsId>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>DemoWebAPI.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -27,6 +28,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="5.0.3" />
     <PackageReference Include="Microsoft.Identity.Web" Version="1.16.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Polly" Version="7.2.2" />
