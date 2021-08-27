@@ -21,7 +21,7 @@ namespace Demo.Services
 {
     public static class SFTPHelper
     {
-        private static readonly string LogicAppUri = Environment.GetEnvironmentVariable("SFTPUrl");
+        private static readonly string Uri = Environment.GetEnvironmentVariable("SFTPUrl");
 
         /// <summary>
         /// Send file to SFTP Server
@@ -46,7 +46,7 @@ namespace Demo.Services
                     var httpContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8);
                     httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                    var response = await httpClient.PostAsync(new Uri(LogicAppUri), httpContent);
+                    var response = await httpClient.PostAsync(new Uri(Uri), httpContent);
                     if (response.IsSuccessStatusCode)
                     {
                         var message = await response.Content.ReadAsStringAsync();

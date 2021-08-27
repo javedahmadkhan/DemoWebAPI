@@ -1,20 +1,27 @@
 ﻿using Demo.Common.Contstants;
-using System;
+using Microsoft.Extensions.Configuration;
 
 namespace Demo.Common
 {
     /// <summary>
     /// 
     /// </summary>
-    public static class ConfigManager
+    public class ConfigManager
     {
+        private readonly IConfiguration configuration;
+
+        public ConfigManager(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static string GetConnectionString()
+        public string GetConnectionString()
         {
-            string conStr = Environment.GetEnvironmentVariable(Constants.conStr);
+            string conStr = configuration.GetSection($"ConnectionString:{Constants.conStr}").Value;
             return conStr;
         }
 
@@ -22,9 +29,9 @@ namespace Demo.Common
         /// 
         /// </summary>
         /// <returns></returns>
-        public static string GetAppInsightsConnectionString()
+        public string GetAppInsightsConnectionString()
         {
-            string conStr = Environment.GetEnvironmentVariable(Constants.appInsightsKey);
+            string conStr = configuration.GetSection($"ApplicationInsights:{Constants.appInsightsKey}").Value;
             return conStr;
         }
     }
