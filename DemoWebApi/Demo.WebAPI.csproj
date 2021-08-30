@@ -6,6 +6,10 @@
     <UserSecretsId>5f1fc30f-8611-4e93-b210-9cd07b20cde7</UserSecretsId>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>DemoWebAPI.pfx</AssemblyOriginatorKeyFile>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+	  <EnableNETAnalyzers>true</EnableNETAnalyzers>
+	  <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+	  <AnalysisLevel>latest</AnalysisLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
