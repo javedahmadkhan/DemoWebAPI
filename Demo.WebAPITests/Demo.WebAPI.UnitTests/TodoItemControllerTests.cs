@@ -28,6 +28,12 @@ namespace DemoWebApi.Controllers.Tests.Tests
         {
 
         }
+        [Test()]
+        public void GetSampleTest()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 
 
