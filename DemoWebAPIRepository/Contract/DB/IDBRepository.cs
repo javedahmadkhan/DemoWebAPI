@@ -1,4 +1,15 @@
-﻿using Demo.Entities.DomainEntity.Contract;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: DBRepository Interface
+//
+// Project: 
+//
+// Author:  Accenture
+//
+// Created Date:  
+//
+using Demo.Entities.DomainEntity.Contract;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -9,7 +20,7 @@ using System.Threading.Tasks;
 namespace Demo.Repository.Contract.DB
 {
     /// <summary>
-    /// 
+    /// This interface is used for performing DB Repository methods
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public interface IDBRepository<TEntity>
@@ -40,9 +51,9 @@ namespace Demo.Repository.Contract.DB
         void AddOrUpdate(TEntity entity);
 
         /// <summary>
-        /// 
+        /// Attachs an entity
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="entity">The entity object to be attached</param>
         void AttachEntity(TEntity entity);
 
         /// <summary>
