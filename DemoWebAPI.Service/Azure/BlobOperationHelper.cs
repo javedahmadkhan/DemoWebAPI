@@ -1,7 +1,19 @@
-﻿namespace Demo.Services.Azure
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Azure Blob opertaion helper class
+//
+// Project: 
+//
+// Author:  Javed Ahmad Khan
+//
+// Created Date:  
+//
+
+namespace Demo.Services.Azure
 {
     /// <summary>
-    /// 
+    /// This class is used for azure blob operation
     /// </summary>
     public class BlobOperationHelper
     {

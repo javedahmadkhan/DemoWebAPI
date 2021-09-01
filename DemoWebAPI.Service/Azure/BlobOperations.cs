@@ -1,4 +1,16 @@
-﻿using Demo.Common.Contstants;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Azure Blob operation class
+//
+// Project: 
+//
+// Author:  Javed Ahmad Khan
+//
+// Created Date:  
+//
+
+using Demo.Common.Contstants;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
@@ -14,7 +26,7 @@ using System.Threading.Tasks;
 namespace Demo.Services.Azure
 {
     /// <summary>
-    /// 
+    /// This class is used to performing azure blob related functionality.
     /// </summary>
     public static class BlobOperations
     {
@@ -23,9 +35,11 @@ namespace Demo.Services.Azure
         private static readonly string clientSecret = Environment.GetEnvironmentVariable("clientSecret");
 
         /// <summary>
-        /// 
+        /// Upload file to azure blob
         /// </summary>
-        /// <param name="azureOperationHelper"></param>
+        /// <param name="azureOperationHelper">Azure Blob Operation Healper Class</param>
+        /// <param name="list">List</param>
+        /// <returns>Boolean</returns>
         public static async Task<bool> BlobUpload<T>(BlobOperationHelper azureOperationHelper, List<T> list)
         {
             var blobContainer = await CreateCloudBlobContainer(azureOperationHelper.StorageAccountName, azureOperationHelper.ContainerName, azureOperationHelper.StorageEndPoint);
@@ -47,9 +61,10 @@ namespace Demo.Services.Azure
         }
 
         /// <summary>
-        /// 
+        /// Download file from azure blob
         /// </summary>
-        /// <param name="azureOperationHelper"></param>
+        /// <param name="azureOperationHelper">Azure Blob Operation Healper Class</param>
+        /// <returns>Boolean</returns>
         public static async Task<bool> DownloadFile(BlobOperationHelper azureOperationHelper)
         {
             var blobContainer = await CreateCloudBlobContainer(azureOperationHelper.StorageAccountName, azureOperationHelper.ContainerName, azureOperationHelper.StorageEndPoint);
@@ -68,15 +83,12 @@ namespace Demo.Services.Azure
         }
 
         /// <summary>
-        /// 
+        /// Create cloud blob container reference
         /// </summary>
-        /// <param name="tenantId"></param>
-        /// <param name="applicationId"></param>
-        /// <param name="clientSecret"></param>
-        /// <param name="storageAccountName"></param>
-        /// <param name="containerName"></param>
-        /// <param name="storageEndPoint"></param>
-        /// <returns></returns>
+        /// <param name="storageAccountName">Azure Storage Account Name</param>
+        /// <param name="containerName">Blob Container Name</param>
+        /// <param name="storageEndPoint">Storage End Point</param>
+        /// <returns>Cloud Blob Container</returns>
         private static async Task<CloudBlobContainer> CreateCloudBlobContainer(string storageAccountName, string containerName, string storageEndPoint)
         {
             var accessToken = await GetUserOAuthToken();
@@ -92,12 +104,9 @@ namespace Demo.Services.Azure
         }
 
         /// <summary>
-        /// 
+        /// Get User OAuth Token
         /// </summary>
-        /// <param name="tenantId"></param>
-        /// <param name="applicationId"></param>
-        /// <param name="clientSecret"></param>
-        /// <returns></returns>
+        /// <returns>Authentication Result Access Token</returns>
         private static async Task<string> GetUserOAuthToken()
         {
             var ResourceId = Constants.ResourceId;

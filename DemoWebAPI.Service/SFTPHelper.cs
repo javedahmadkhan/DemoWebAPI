@@ -1,7 +1,7 @@
 ﻿//
 // Copyright:   Copyright (c) 
 //
-// Description: All SFTP related functionality has been done in this class for project
+// Description: SFTP Hepler Class
 //
 // Project: 
 //
@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 
 namespace Demo.Services
 {
+    /// <summary>
+    /// This class is used to performing SFTP related functionality.
+    /// </summary>
     public static class SFTPHelper
     {
         private static readonly string Uri = Environment.GetEnvironmentVariable("SFTPUrl");
@@ -28,7 +31,7 @@ namespace Demo.Services
         /// </summary>
         /// <param name="fileName">File Name</param>
         /// <param name="container">Azure blob container</param>
-        /// <returns>Returns boolean Response</returns>
+        /// <returns>Boolean</returns>
         public static async Task<bool> PostSendFile(string container, string fileName)
         {
             try

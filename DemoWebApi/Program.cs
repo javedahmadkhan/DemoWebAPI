@@ -1,3 +1,14 @@
+//
+// Copyright:   Copyright (c) 
+//
+// Description: Program Class
+//
+// Project: 
+//
+// Author:  Javed Ahmad Khan
+//
+// Created Date:  
+//
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -8,14 +19,14 @@ using System.Reflection;
 namespace DemoWebApi
 {
     /// <summary>
-    /// 
+    /// This Class is used for configuring startup class
     /// </summary>
-    public class Program
+    public static class Program
     {
         /// <summary>
-        /// 
+        /// Main Method
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">Array</param>
         public static void Main(string[] args)
         {
             var log4netRepository = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -24,10 +35,10 @@ namespace DemoWebApi
         }
 
         /// <summary>
-        /// 
+        /// Create Host Builder Method
         /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
+        /// <param name="args">Array</param>
+        /// <returns>Host Builder</returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((hostingContext, config) =>

@@ -1,20 +1,29 @@
-﻿using Demo.BusinessLogic.Contract;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Todo Item Controller
+//
+// Project: 
+//
+// Author:  Javed Ahmad Khan
+//
+// Created Date:  
+//
+using Demo.BusinessLogic.Contract;
 using Demo.Common.Enums;
 using Demo.Models;
 using Demo.Services.HTTPClientFactory.Contract;
 using Demo.WebAPI;
 using Demo.WebAPI.Attributes;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Polly.CircuitBreaker;
 using System;
 using System.Threading.Tasks;
 
 namespace DemoWebApi.Controllers
 {
-
     /// <summary>
-    /// 
+    /// This controller is used for Todo Item Web API
     /// </summary>
     //[Authorize(Policy = "p-web-api-with-roles-user")]
     // [Authorize(Policy = "ValidateAccessTokenPolicy")]
@@ -27,11 +36,10 @@ namespace DemoWebApi.Controllers
         private readonly IHttpClientService _httpClientService;
 
         /// <summary>
-        /// 
+        /// Constructor for Todo Item Web API
         /// </summary>
-        /// <param name="service"></param>
-        /// <param name="logger"></param>
-        /// <param name="httpClientService"></param>
+        /// <param name="service">Todo Item Management Service inteface</param>
+        /// <param name="httpClientService">Http Client Service inteface</param>
         public TodoItemController(ITodoItemManagementService service, IHttpClientService httpClientService)
         {
             this.service = service;
@@ -39,9 +47,9 @@ namespace DemoWebApi.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get Todo Items Method
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Action Result</returns>
         [Route("TodoItems")]
         [HttpGet]
         public async Task<IActionResult> GetTodoItems()
@@ -51,11 +59,6 @@ namespace DemoWebApi.Controllers
                 await Task.Run(() => Logger.LogMsg("Log message in Get to do items method", Enums.LogType.INFO));
                 return Ok(await service.GetTodoItemList());
             }
-            catch (BrokenCircuitException ex)
-            {
-                await Task.Run(() => Logger.LogMsg($"Broken Circuit Exception {ex.Message} Exception occured in Get to do items method", Enums.LogType.ERROR));
-                throw;
-            }
             catch (Exception ex)
             {
                 await Task.Run(() => Logger.LogMsg("Exception occured in Get to do items method", Enums.LogType.ERROR));
@@ -64,10 +67,10 @@ namespace DemoWebApi.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get Todo Item Method
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Id</param>
+        /// <returns>Action Result</returns>
         [Route("TodoItem/{id}")]
         [HttpGet]
         public async Task<IActionResult> GetTodoItem(int id)
@@ -92,10 +95,10 @@ namespace DemoWebApi.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Todo Item Create or Update Method
         /// </summary>
-        /// <param name="todoItemDto"></param>
-        /// <returns></returns>
+        /// <param name="todoItemDto">TodoItemDto Class</param>
+        /// <returns>Action Result</returns>
         [Route("TodoItem/CreateOrUpdate")]
         [ModelValidation]
         [HttpPost]
@@ -133,10 +136,10 @@ namespace DemoWebApi.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Todo Item Delete Method
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Id</param>
+        /// <returns>Action Result</returns>
         [Route("TodoItem/{id}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteTodoItem(int id)
@@ -168,9 +171,9 @@ namespace DemoWebApi.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Sample Web Api Method for testing http factory
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Action Result</returns>
         [Route("Sample")]
         [HttpGet]
         public async Task<IActionResult> GetSample()
@@ -178,7 +181,7 @@ namespace DemoWebApi.Controllers
             try
             {
                 await Task.Run(() => Logger.LogMsg("Log message in sample method", Enums.LogType.INFO));
-                var response = await _httpClientService.GetListWithHttpRequestMessageAsync("https://api.twilio.com/2010-04-01/");
+                var response = await _httpClientService.GetListWithHttpRequestMessageAsync("https://localhost:44301/api/WeatherForecast/");
                 return Ok(response);
             }
             catch (BrokenCircuitException ex)

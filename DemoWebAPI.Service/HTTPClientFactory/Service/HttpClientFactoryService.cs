@@ -1,4 +1,15 @@
-﻿using Demo.Services.HTTPClientFactory.Contract;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Http Client Factory Service Class
+//
+// Project: 
+//
+// Author:  Javed Ahmad Khan
+//
+// Created Date:  
+//
+using Demo.Services.HTTPClientFactory.Contract;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +23,7 @@ using System.Xml.Linq;
 namespace Demo.Services.HTTPClientFactory.Service
 {
 	/// <summary>
-	/// 
+	/// This Class is used for HTTP Client Factory functionality.
 	/// </summary>
     public class HttpClientFactoryService : IHttpClientService
 	{
@@ -20,10 +31,10 @@ namespace Demo.Services.HTTPClientFactory.Service
 		private readonly HttpClient httpClient;
 
 		/// <summary>
-		/// 
+		/// Constructor for Http Client Factory Service
 		/// </summary>
-		/// <param name="httpClientFactory"></param>
-		/// <param name="httpClient"></param>
+		/// <param name="httpClientFactory">IHttp Client Factory</param>
+		/// <param name="httpClient">Http Client</param>
 		public HttpClientFactoryService(IHttpClientFactory httpClientFactory, HttpClient httpClient)
 		{
 			this.httpClientFactory = httpClientFactory;
@@ -31,10 +42,10 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Get List Method
 		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
+		/// <param name="path">Path</param>
+		/// <returns>Http Response</returns>
 		public async Task<string> GetListAsync(string path)
 		{
 			using (var response = await httpClient.GetAsync(path, HttpCompletionOption.ResponseHeadersRead))
@@ -46,10 +57,10 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Get List Method With Http Request Message
 		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
+		/// <param name="path">Path</param>
+		/// <returns>Http Response</returns>
 		public async Task<string> GetListWithHttpRequestMessageAsync(string path)
 		{
 			var request = new HttpRequestMessage(HttpMethod.Get, path);
@@ -64,11 +75,11 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Get Method
 		/// </summary>
-		/// <param name="path"></param>
-		/// <param name="id"></param>
-		/// <returns></returns>
+		/// <param name="path">Path</param>
+		/// <param name="id">Id</param>
+		/// <returns>Http Response</returns>
 		public async Task<string> GetAsync(string path, string id)
 		{
 			var uri = Path.Combine(path, id);
@@ -82,10 +93,10 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Get List Method with XML Header
 		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
+		/// <param name="path">Path</param>
+		/// <returns>Http Response</returns>
 		public async Task<string> GetListwithXMLHeaderAsync(string path)
 		{
 			var request = new HttpRequestMessage(HttpMethod.Get, path);
@@ -109,11 +120,11 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Create Method
 		/// </summary>
-		/// <param name="body"></param>
-		/// <param name="path"></param>
-		/// <returns></returns>
+		/// <param name="body">Request Body</param>
+		/// <param name="path">Path</param>
+		/// <returns>Http Response</returns>
 		public async Task<string> CreateAsync(object body, string path)
 		{
 			var requestBody = JsonSerializer.Serialize(body);
@@ -129,11 +140,11 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Create Method With Http Request Message
 		/// </summary>
-		/// <param name="body"></param>
-		/// <param name="path"></param>
-		/// <returns></returns>
+		/// <param name="body">Request Body</param>
+		/// <param name="path">Path</param>
+		/// <returns>Http Response</returns>
 		public async Task<string> CreateWithHttpRequestMessageAsync(object body, string path)
 		{
 			var requestBody = JsonSerializer.Serialize(body);
@@ -152,12 +163,12 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Update Method
 		/// </summary>
-		/// <param name="body"></param>
-		/// <param name="path"></param>
-		/// <param name="id"></param>
-		/// <returns></returns>
+		/// <param name="body">Request Body</param>
+		/// <param name="path">Path</param>
+		/// <param name="id">Id</param>
+		/// <returns>Http Response</returns>
 		public async Task<string> UpdateAsync(object body, string path, string id)
 		{
 			var requestBody = JsonSerializer.Serialize(body);
@@ -175,12 +186,12 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Update Method With Http Request Message
 		/// </summary>
-		/// <param name="body"></param>
-		/// <param name="path"></param>
-		/// <param name="id"></param>
-		/// <returns></returns>
+		/// <param name="body">Request Body</param>
+		/// <param name="path">Path</param>
+		/// <param name="id">Id</param>
+		/// <returns>Http Response</returns>
 		public async Task<string> UpdateWithHttpRequestMessageAsync(object body, string path, string id)
 		{
 			var requestBody = JsonSerializer.Serialize(body);
@@ -201,11 +212,10 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Delete Method
 		/// </summary>
-		/// <param name="path"></param>
-		/// <param name="id"></param>
-		/// <returns></returns>
+		/// <param name="path">Path</param>
+		/// <param name="id">Id</param>
 		public async Task DeleteAsync(string path, string id)
 		{
 			var uri = Path.Combine(path, id);
@@ -217,11 +227,10 @@ namespace Demo.Services.HTTPClientFactory.Service
 		}
 
 		/// <summary>
-		/// 
+		/// Delete Method With Http Request Message
 		/// </summary>
-		/// <param name="path"></param>
-		/// <param name="id"></param>
-		/// <returns></returns>
+		/// <param name="path">Path</param>
+		/// <param name="id">Id</param>
 		public async Task DeleteWithHttpRequestMessageAsync(string path, string id)
 		{
 			var uri = Path.Combine(path, id);

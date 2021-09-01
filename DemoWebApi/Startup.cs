@@ -1,3 +1,14 @@
+//
+// Copyright:   Copyright (c) 
+//
+// Description: Startup Class
+//
+// Project: 
+//
+// Author:  Javed Ahmad Khan
+//
+// Created Date:  
+//
 using AutoMapper;
 using Demo.BusinessLogic.AutoMapperProfile;
 using Demo.Common;
@@ -22,14 +33,14 @@ using System.IdentityModel.Tokens.Jwt;
 namespace DemoWebApi
 {
     /// <summary>
-    /// 
+    /// This Class is used for configuring service into startup
     /// </summary>
     public class Startup
     {
         /// <summary>
-        /// 
+        /// Constructor For Startup
         /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name="configuration">Configuration</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,10 +49,9 @@ namespace DemoWebApi
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        /// 
+        /// Configure Services Method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
-        /// <param name="services"></param>
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <param name="services">Service Collection</param>
         public void ConfigureServices(IServiceCollection services)
         {
             var config = new ConfigManager(Configuration);
@@ -132,13 +142,12 @@ namespace DemoWebApi
         }
 
         /// <summary>
-        /// 
+        /// Configure Method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        /// <param name="context"></param>
-        /// <param name="loggerFactory"></param>
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <param name="app">Application Builder</param>
+        /// <param name="env">Web Host Environment</param>
+        /// <param name="context">Database Context</param>
+        /// <param name="loggerFactory">Logger Factory</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DemoDBContext context, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
