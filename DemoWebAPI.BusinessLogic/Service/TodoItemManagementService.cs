@@ -1,4 +1,15 @@
-﻿using AutoMapper;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Todo Item Management Service Class
+//
+// Project: 
+//
+// Author:  Accenture
+//
+// Created Date:  
+//
+using AutoMapper;
 using Demo.BusinessLogic.Contract;
 using Demo.Entities;
 using Demo.Models;
@@ -11,7 +22,7 @@ using System.Threading.Tasks;
 namespace Demo.BusinessLogic.Service
 {
     /// <summary>
-    /// 
+    /// This class is used to performing Todo Item related functionality.
     /// </summary>
     public class TodoItemManagementService : ITodoItemManagementService
     {
@@ -19,10 +30,10 @@ namespace Demo.BusinessLogic.Service
         private readonly IMapper mapper;
 
         /// <summary>
-        /// 
+        /// Constructor for Todo Item Management Service
         /// </summary>
-        /// <param name="unitOfWork"></param>
-        /// <param name="mapper"></param>
+        /// <param name="unitOfWork">Unit of Work</param>
+        /// <param name="mapper">Mapper</param>
         public TodoItemManagementService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
@@ -30,10 +41,10 @@ namespace Demo.BusinessLogic.Service
         }
 
         /// <summary>
-        /// 
+        /// Create or Update Todo Item Method
         /// </summary>
-        /// <param name="todoItemDTO"></param>
-        /// <returns></returns>
+        /// <param name="todoItemDTO">Todo Item DTO</param>
+        /// <returns>Int</returns>
         public async Task<int> CreateOrUpdateTodoItem(TodoItemCreateOrUpdateDTO todoItemDTO)
         {
             try
@@ -61,10 +72,10 @@ namespace Demo.BusinessLogic.Service
         }
 
         /// <summary>
-        /// 
+        /// Delete Todo Item Method
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Id</param>
+        /// <returns>Int</returns>
         public async Task<int> DeleteTodoItem(int id)
         {
             try
@@ -82,10 +93,10 @@ namespace Demo.BusinessLogic.Service
         }
 
         /// <summary>
-        /// 
+        /// Get Todo Item Method
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Id</param>
+        /// <returns>Todo Item DTO</returns>
         public async Task<TodoItemDTO> GetTodoItem(int id)
         {
             try
@@ -107,9 +118,9 @@ namespace Demo.BusinessLogic.Service
         }
 
         /// <summary>
-        /// 
+        /// Get Todo Item List Method
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Todo Item List DTO</returns>
         public async Task<TodoItemListDTO> GetTodoItemList()
         {
             try

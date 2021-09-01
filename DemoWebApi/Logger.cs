@@ -1,11 +1,31 @@
-﻿using log4net;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Logger Class
+//
+// Project: 
+//
+// Author:  Accenture
+//
+// Created Date:  
+//
+
+using log4net;
 using Demo.Common.Enums;
 using System.Threading;
 
 namespace Demo.WebAPI
 {
+    /// <summary>
+    /// This class is used for logging
+    /// </summary>
     public static class Logger
     {
+        /// <summary>
+        /// Log Messge Method
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="logType">Log Type</param>
         public static void LogMsg(string msg, Enums.LogType logType)
         {
             ILog log = LogManager.GetLogger(typeof(Logger));
@@ -30,4 +50,3 @@ namespace Demo.WebAPI
         }
     }
 }
-
