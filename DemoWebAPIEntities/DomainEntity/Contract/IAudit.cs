@@ -1,9 +1,21 @@
-﻿using System;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Audit Interface
+//
+// Project: 
+//
+// Author:  Accenture
+//
+// Created Date:  
+//
+
+using System;
 
 namespace Demo.Entities.DomainEntity.Contract
 {
     /// <summary>
-    /// 
+    /// Audit Interface
     /// </summary>
     public interface IAudit
     {

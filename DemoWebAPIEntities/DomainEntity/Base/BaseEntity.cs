@@ -1,10 +1,21 @@
-﻿using Demo.Entities.DomainEntity.Contract;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Base Entity Class
+//
+// Project: 
+//
+// Author:  Accenture
+//
+// Created Date:  
+//
+using Demo.Entities.DomainEntity.Contract;
 using System;
 
 namespace Demo.Entities.DomainEntity.Base
 {
     /// <summary>
-    /// 
+    /// Base Entity Class
     /// </summary>
     public abstract class BaseEntity : IEntity, IAudit
     {

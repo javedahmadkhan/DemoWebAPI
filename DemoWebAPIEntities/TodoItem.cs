@@ -1,11 +1,23 @@
-﻿using Demo.Entities.DomainEntity.Base;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Todo Item Class
+//
+// Project: 
+//
+// Author:  Accenture
+//
+// Created Date:  
+//
+
+using Demo.Entities.DomainEntity.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Demo.Entities
 {
     /// <summary>
-    /// 
+    /// Todo Item Class for table TodoItem
     /// </summary>
     [Table("TodoItem", Schema = "dbo")]
     public class TodoItem : BaseEntity

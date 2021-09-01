@@ -1,10 +1,24 @@
-﻿namespace Demo.Common.Enums
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Enums Class
+//
+// Project: 
+//
+// Author:  Accenture
+//
+// Created Date:  
+//
+namespace Demo.Common.Enums
 {
     /// <summary>
-    /// 
+    /// This class is used to managing enums for project
     /// </summary>
-    public class Enums
+    public static class Enums
     {
+        /// <summary>
+        /// Log Type Enums
+        /// </summary>
         public enum LogType : int
         {
             DEBUG = 0,

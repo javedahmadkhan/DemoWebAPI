@@ -1,9 +1,21 @@
-﻿namespace Demo.Common.Contstants
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Constants Class
+//
+// Project: 
+//
+// Author:  Accenture
+//
+// Created Date:  
+//
+
+namespace Demo.Common.Contstants
 {
     /// <summary>
-    /// 
+    /// This class is used to managing constants for project
     /// </summary>
-    public class Constants
+    public static class Constants
     {
         public const string conStr = "DemoWebAPI";
 

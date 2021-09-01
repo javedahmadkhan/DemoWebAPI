@@ -1,9 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿//
+// Copyright:   Copyright (c) 
+//
+// Description: Todo Item Create or Update DTO Class
+//
+// Project: 
+//
+// Author:  Accenture
+//
+// Created Date:  
+//
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Demo.Models
 {
     /// <summary>
-    /// 
+    /// Todo Item Create or Update DTO
     /// </summary>
     public class TodoItemCreateOrUpdateDTO
     {
