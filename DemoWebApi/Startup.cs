@@ -157,29 +157,11 @@ namespace DemoWebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DemoWebApi v1"));
             }
 
-            app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-            //app.UseExceptionHandler(options => options.Run(async context =>
-            //{
-            //    var statusCode = (int)HttpStatusCode.InternalServerError;
-            //    context.Response.StatusCode = statusCode;
-            //    context.Response.ContentType = "application/json";
-
-            //    var exception = context.Features.Get<IExceptionHandlerFeature>();
-            //    if (exception != null)
-            //        await context.Response.WriteAsync(new
-            //        {
-            //            ErrorCode = statusCode,
-            //            ErrorMessage = exception.Error.Message,
-            //            ErrorDescription = "Global exception handling using app.UseExceptionHandler"
-
-            //        }.ToString());
-
-            //}));
+            app.UseMiddleware<ExceptionHandlingMiddleware>();            
 
             app.UseHttpsRedirection();
 
-
+            
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
