@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Diagnostics;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
     using System;
     using System.Net;
@@ -17,13 +16,6 @@
     public class ExceptionHandlingMiddleware
     {
         private RequestDelegate requestDelegate;
-        private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
-        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
-        {
-            _logger = logger;
-            _next = next;
-        }
 
         /// <summary>
         /// 
@@ -77,7 +69,7 @@
                     break;
             }
 
-            if (result == string.Empty)
+            if (string.IsNullOrEmpty(result))
             {
                 result = JsonConvert.SerializeObject(new { error = e.Message });
             }
@@ -91,6 +83,7 @@
         public class CustomError
         {
             public int StatusCode { get; set; }
+            
             public string Message { get; set; }
 
             public override string ToString()
@@ -98,9 +91,8 @@
                 return JsonConvert.SerializeObject(this);
             }
         }
-
-       
     }
+
     public static class CustomExcepExceptionExtensions
     {
         public static void ConfigureCustomExceptionMiddleware(this IApplicationBuilder app)
